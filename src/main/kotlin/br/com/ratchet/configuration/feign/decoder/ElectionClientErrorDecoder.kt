@@ -5,7 +5,7 @@ import feign.codec.ErrorDecoder
 import mu.KotlinLogging
 import java.lang.Exception
 
-class FeignErrorDecoder : ErrorDecoder {
+class ElectionClientErrorDecoder : ErrorDecoder {
     private val logger = KotlinLogging.logger {}
 
     override fun decode(methodKey: String, response: Response): Exception {

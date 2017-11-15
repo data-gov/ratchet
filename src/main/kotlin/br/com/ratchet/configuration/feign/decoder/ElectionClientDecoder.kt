@@ -1,6 +1,6 @@
 package br.com.ratchet.configuration.feign.decoder
 
-import br.com.ratchet.client.model.PresidentElectionData
+import br.com.ratchet.client.model.ElectionData
 import com.fasterxml.jackson.dataformat.csv.CsvMapper
 import com.fasterxml.jackson.dataformat.csv.CsvSchema
 import com.google.common.collect.ImmutableList
@@ -8,20 +8,19 @@ import com.google.common.collect.ImmutableList.copyOf
 import feign.Response
 import feign.Util
 import feign.codec.Decoder
-import org.springframework.beans.factory.annotation.Autowired
 import java.lang.reflect.Type
 
-class ElectionDecoder : Decoder {
+class ElectionClientDecoder : Decoder {
 
-    @Autowired private lateinit var mapper: CsvMapper
+    private val mapper = CsvMapper()
 
-    override fun decode(response: Response, type: Type): ImmutableList<String> {
+    override fun decode(response: Response, type: Type): ImmutableList<ElectionData> {
         val responseString = Util.toString(response.body()?.asReader())
         val responseObject = when (responseString) {
             null -> emptyList()
-            else -> mapper.readerFor(PresidentElectionData::class.java)
+            else -> mapper.readerFor(ElectionData::class.java)
                 .with(CsvSchema.emptySchema().withHeader())
-                .readValues<String>(responseString).readAll()
+                .readValues<ElectionData>(responseString).readAll()
         }
 
         return copyOf(responseObject)

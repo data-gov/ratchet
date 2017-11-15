@@ -1,7 +1,7 @@
 package br.com.ratchet.service
 
 import br.com.ratchet.client.ElectionClient
-import br.com.ratchet.client.model.PresidentElectionData
+import br.com.ratchet.client.model.ElectionData
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
@@ -34,5 +34,5 @@ internal class ElectionServiceTest {
     }
 
     private fun electionInfo() =
-        listOf(PresidentElectionData(1, "PDG", 1, "PRESIDENTE", 2014, 99, "99", "RS", "VINICIUS", 100))
+        listOf(ElectionData(1, "PDG", 1, "PRESIDENTE", 2014, 99, "99", "RS", "VINICIUS", 100))
 }

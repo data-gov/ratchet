@@ -2,7 +2,7 @@ package br.com.ratchet.client.model
 
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class PresidentElectionData(
+data class ElectionData(
     @JsonProperty("CODIGO_CARGO") val postCode: Int,
     @JsonProperty("SIGLA_PARTIDO") val partyAcronym: String,
     @JsonProperty("NUM_TURNO") val shift: Int,
