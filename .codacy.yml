@@ -1,0 +1,8 @@
+exclude_paths:
+  - '**/test/**'
+  - '*Test.kt'
+  - src/test/**
+metrics:
+  enabled: true
+coverage:
+  enabled: true
