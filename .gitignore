@@ -1,0 +1,15 @@
+# IntelliJ Meta
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Compiled folders
+out/
+build/
+
+# Gradle Config
+.gradle/
+
+# Mac Stuff
+.DS_Store

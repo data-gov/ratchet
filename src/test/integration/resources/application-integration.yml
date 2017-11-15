@@ -1,0 +1,5 @@
+camara:
+  api: http://localhost:9000
+
+cepesp:
+  api: http://localhost:9000

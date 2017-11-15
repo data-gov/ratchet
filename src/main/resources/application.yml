@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: ratchet
+  data:
+    mongodb:
+      port: 0
+
+camara:
+  api: https://dadosabertos.camara.leg.br/api/v2/
+
+cepesp:
+  api: http://cepesp.io/api/consulta
+
+logging:
+  level:
+    br.com.ratchet: DEBUG
+  feign:
+    type: FULL
+
+feign:
+  okhttp:
+    enabled: true
+  compression:
+    request:
+      enabled: true
+      mime-types: application/json, text/csv
+    response:
+      enabled: true
+  connectTimeout: 5000
+  readTimeout: 5000

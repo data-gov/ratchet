@@ -1,0 +1,52 @@
+anguage: java
+
+sudo: false
+
+jdk:
+  - oraclejdk8
+os:
+  - linux
+
+before_install:
+  - sudo apt-get install jq
+  - wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r .assets[0].browser_download_url)
+
+cache:
+  directories:
+  - "$HOME/.m2"
+  - "$HOME/.gradle"
+
+branches:
+  only:
+  - master
+
+stages:
+  - compile
+  - code-quality
+  - test
+  - integrationTest
+  - coverage
+
+jobs:
+  include:
+  - stage: compile
+    script:
+    - "./gradlew compileKotlin"
+
+  - stage: code-quality
+    script:
+    - "./gradlew detektCheck"
+
+  - stage: test
+    script:
+    - "./gradlew test"
+
+  - stage: integrationTest
+    script:
+    - "./gradlew integrationTest"
+
+  - stage: coverage
+    script:
+    - "./gradlew jacocoTestReport"
+    - bash <(curl -s https://codecov.io/bash)
+    - java -cp ~/codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter -l Java -r build/reports/jacoco/report.xml

@@ -1,0 +1,33 @@
+jacoco {
+  toolVersion = "0.7.9"
+}
+
+test {
+  jacoco {
+    append = true
+  }
+}
+
+jacocoTestReport {
+  dependsOn test
+  dependsOn integrationTest
+
+  reports {
+    xml.enabled true
+    html.enabled true
+
+    xml.destination file("${reportsDir}/jacoco/report.xml")
+    html.destination file("${reportsDir}/jacoco/html")
+  }
+  afterEvaluate {
+    executionData test, integrationTest
+    sourceDirectories = files("src/main")
+    classDirectories = fileTree(
+      dir: "${buildDir}/classes/kotlin/main",
+      excludes: [
+        "**/Ratchet*",
+        "**/model/**"
+      ]
+    )
+  }
+}
