@@ -26,7 +26,8 @@ jacocoTestReport {
       dir: "${buildDir}/classes/kotlin/main",
       excludes: [
         "**/Ratchet*",
-        "**/model/**"
+        "**/model/**",
+        "**/configuration/**"
       ]
     )
   }

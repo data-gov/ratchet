@@ -1,4 +1,4 @@
-anguage: java
+language: java
 
 sudo: false
 
@@ -7,14 +7,11 @@ jdk:
 os:
   - linux
 
-before_install:
-  - sudo apt-get install jq
-  - wget -O ~/codacy-coverage-reporter-assembly-latest.jar $(curl https://api.github.com/repos/codacy/codacy-coverage-reporter/releases/latest | jq -r .assets[0].browser_download_url)
-
 cache:
   directories:
   - "$HOME/.m2"
   - "$HOME/.gradle"
+  - "./build"
 
 branches:
   only:
@@ -32,6 +29,8 @@ jobs:
   - stage: compile
     script:
     - "./gradlew compileKotlin"
+    - "./gradlew compileTestKotlin"
+    - "./gradlew compileIntegrationTestKotlin "
 
   - stage: code-quality
     script:
@@ -49,4 +48,3 @@ jobs:
     script:
     - "./gradlew jacocoTestReport"
     - bash <(curl -s https://codecov.io/bash)
-    - java -cp ~/codacy-coverage-reporter-assembly-latest.jar com.codacy.CodacyCoverageReporter -l Java -r build/reports/jacoco/report.xml
