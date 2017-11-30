@@ -2,7 +2,6 @@ package br.com.ratchet.configuration.jackson
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include.NON_EMPTY
 import com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES
-import com.fasterxml.jackson.dataformat.csv.CsvMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -16,8 +15,6 @@ class JacksonConfiguration {
         Jackson2ObjectMapperBuilder()
             .modulesToInstall(KotlinModule())
             .serializationInclusion(NON_EMPTY)
+            .failOnUnknownProperties(false)
             .featuresToDisable(FAIL_ON_UNKNOWN_PROPERTIES)
-
-    @Bean
-    fun csvMapper() = CsvMapper()
 }

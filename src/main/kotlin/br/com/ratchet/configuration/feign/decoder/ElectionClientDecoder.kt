@@ -1,6 +1,7 @@
 package br.com.ratchet.configuration.feign.decoder
 
 import br.com.ratchet.client.model.ElectionData
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.dataformat.csv.CsvMapper
 import com.fasterxml.jackson.dataformat.csv.CsvSchema
 import com.google.common.collect.ImmutableList
@@ -12,7 +13,7 @@ import java.lang.reflect.Type
 
 class ElectionClientDecoder : Decoder {
 
-    private val mapper = CsvMapper()
+    private val mapper = CsvMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
     override fun decode(response: Response, type: Type): ImmutableList<ElectionData> {
         val responseString = Util.toString(response.body()?.asReader())

@@ -9,7 +9,7 @@ data class ElectionData(
     @JsonProperty("DESCRICAO_CARGO") val postDescription: String,
     @JsonProperty("ANO_ELEICAO") val electionYear: Int,
     @JsonProperty("NUMERO_PARTIDO") val partyNumber: Int,
-    @JsonProperty("NUMERO_CANDIDATO") val candidateNumber: String,
+    @JsonProperty("NUMERO_CANDIDATO") val candidateNumber: Int,
     @JsonProperty("UF") val state: String,
     @JsonProperty("NOME_CANDIDATO") val candidateName: String,
     @JsonProperty("QTDE_VOTOS") val numberVotes: Int
