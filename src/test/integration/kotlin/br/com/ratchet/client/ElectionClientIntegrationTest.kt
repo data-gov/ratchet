@@ -45,7 +45,7 @@ class ElectionClientIntegrationTest {
 
         givenThat(
             get(urlMatching(ELECTION_ENDPOINT))
-                .withQueryParam("ano", equalTo("1998, 2002, 2006, 2010, 2014"))
+                .withQueryParam("ano", equalTo("2014"))
                 .withQueryParam("cargo", equalTo("1"))
                 .withQueryParam("agregacao_regional", equalTo("2"))
                 .withQueryParam("agregacao_politica", equalTo("2"))
@@ -55,18 +55,17 @@ class ElectionClientIntegrationTest {
 
     @Test
     fun shouldExtractElectionInfo() {
-        val electionData = client.electionData("1998, 2002, 2006, 2010, 2014", 1)
+        val electionData = client.electionData(2014, 1)
 
         verify(
             getRequestedFor(urlMatching(ELECTION_ENDPOINT))
-                .withQueryParam("ano", equalTo("1998, 2002, 2006, 2010, 2014"))
+                .withQueryParam("ano", equalTo("2014"))
                 .withQueryParam("cargo", equalTo("1"))
                 .withQueryParam("agregacao_regional", equalTo("2"))
                 .withQueryParam("agregacao_politica", equalTo("2"))
         )
 
         assertThat(electionData).isNotEmpty
-
     }
 
 }

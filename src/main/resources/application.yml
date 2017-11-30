@@ -1,9 +1,6 @@
 spring:
   application:
     name: ratchet
-  data:
-    mongodb:
-      port: 0
 
 camara:
   api: https://dadosabertos.camara.leg.br/api/v2/

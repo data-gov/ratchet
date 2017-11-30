@@ -1,18 +1,25 @@
 package br.com.ratchet.service
 
 import br.com.ratchet.client.ElectionClient
+import br.com.ratchet.controller.model.ElectionRequest
+import br.com.ratchet.mapper.toElection
+import br.com.ratchet.repository.ElectionRepository
+import br.com.ratchet.repository.model.Election
 import mu.KotlinLogging
 import org.springframework.stereotype.Service
 
 @Service
-class ElectionService(private val client: ElectionClient) {
+class ElectionService(private val client: ElectionClient, private val repository: ElectionRepository) {
 
     private val logger = KotlinLogging.logger {}
 
-    fun extractElectionInfo(roleCode: Int = 1, electionYears: List<Int> = listOf(1998, 2002, 2006, 2010, 2014)) {
-        val electionData = client.electionData(electionYears.joinToString(), roleCode)
+    fun extractElectionInfo(request: ElectionRequest): Election {
+        val electionData = client.electionData(request.year, request.post.code)
+        val election = toElection(request, electionData)
 
-        logger.info { "Election data extracted successfully. ${electionData.size} results found." }
+        logger.info { "Election data generated successfully. Sending data to Mongo..." }
+
+        return repository.save(election)
     }
 
 }

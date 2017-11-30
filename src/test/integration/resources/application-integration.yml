@@ -3,3 +3,8 @@ camara:
 
 cepesp:
   api: http://localhost:9000
+
+spring:
+  data:
+    mongodb:
+      port: 0

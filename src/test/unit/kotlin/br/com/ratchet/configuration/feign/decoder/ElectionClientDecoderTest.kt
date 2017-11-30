@@ -19,8 +19,8 @@ class ElectionClientDecoderTest {
 
         assertThat(decodedObject).hasSize(2)
         assertThat(decodedObject).containsExactlyInAnyOrder(
-            ElectionData(1, "ADG", 1, "PRESIDENTE", 2014, 99, "99", "RS", "EDUARDO MORONI", 72256),
-            ElectionData(1, "PDG", 1, "PRESIDENTE", 2014, 88, "88", "RS", "VINICIUS COSTA", 167603))
+            ElectionData(1, "ADG", 1, "PRESIDENTE", 2014, 99, 99, "RS", "EDUARDO MORONI", 72256),
+            ElectionData(1, "PDG", 1, "PRESIDENTE", 2014, 88, 88, "RS", "VINICIUS COSTA", 167603))
     }
 
     @Test
