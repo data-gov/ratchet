@@ -11,7 +11,7 @@ import java.util.Collections.singletonList
 
 fun toElection(electionRequest: ElectionRequest, electionData: List<ElectionData>): Election {
     val candidateData = groupElectionDataByCandidate(electionData)
-    val candidates = candidates(candidateData)
+    val candidates = toCandidates(candidateData)
 
     return Election(electionRequest.year, toPost(electionRequest.post, candidates))
 }
@@ -21,7 +21,7 @@ private fun groupElectionDataByCandidate(electionData: List<ElectionData>) =
         Candidate(it.candidateNumber, it.candidateName, it.partyAcronym, it.partyNumber, emptyList())
     }
 
-private fun candidates(candidateData: Map<Candidate, List<ElectionData>>) =
+private fun toCandidates(candidateData: Map<Candidate, List<ElectionData>>) =
     candidateData.mapValues {
         val votes = it.value.map {
             Vote(it.state, it.shift, it.numberVotes)
