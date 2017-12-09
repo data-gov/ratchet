@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration
 import java.util.concurrent.TimeUnit.MILLISECONDS
 import java.util.concurrent.TimeUnit.MINUTES
 
+// TODO: Separate feign config, one for witai other for elections
 @Configuration
 class FeignConfiguration {
 

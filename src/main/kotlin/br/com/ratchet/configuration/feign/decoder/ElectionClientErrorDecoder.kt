@@ -10,6 +10,11 @@ class ElectionClientErrorDecoder : ErrorDecoder {
 
     override fun decode(methodKey: String, response: Response): Exception {
         logger.error { errorMessage(methodKey, response) }
+
+        if (response.request().url().contains("api.wit.ai") && response.status() == 409) {
+            return RuntimeException("WIT AI Conflict") // TODO: refactor this
+        }
+
         return RuntimeException("External API failure")
     }
 
