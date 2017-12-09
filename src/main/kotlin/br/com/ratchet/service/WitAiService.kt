@@ -11,25 +11,21 @@ import org.springframework.stereotype.Service
 class WitAiService(private val client: WitAiClient) {
 
     private val logger = KotlinLogging.logger {}
-    @Value("\${witai.token}") private lateinit var token: String
+    @Value("\${witai.token}")
+    private lateinit var token: String
 
     fun saveCandidates(election: Election) {
         election.post.forEach { post ->
             if (post.postDescription == "PRESIDENTE") {
                 post.candidates.forEach { candidate ->
-                    savePresident(candidate.name)
+                    client.addNewPresident(toEntityValue(candidate.name), "Bearer $token")
+                    logger.info { "Added $candidate.name to Wit.ai president entity" }
                 }
             }
         }
     }
 
-    private fun savePresident(name: String) {
-        val request = toEntityValue(name)
-        client.addNewPresident(request, "Bearer $token")
-        logger.info { "Added $name to Wit.ai president entity" }
-    }
-
-    private fun toEntityValue(name: String) = EntityValues(name, synonyms(name), metadata(name))
+    private fun toEntityValue(name: String) = EntityValues(name, synonyms(name).filter { word -> !(word == "DA" || word == "DE") }, metadata(name))
     private fun synonyms(name: String) = name.split(' ')
     private fun metadata(name: String) = name.replace(' ', '_')
 
