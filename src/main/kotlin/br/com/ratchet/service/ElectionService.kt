@@ -9,7 +9,7 @@ import mu.KotlinLogging
 import org.springframework.stereotype.Service
 
 @Service
-class ElectionService(private val client: ElectionClient, private val repository: ElectionRepository) {
+class ElectionService(private val client: ElectionClient, private val repository: ElectionRepository, private val witai: WitAiService) {
 
     private val logger = KotlinLogging.logger {}
 
@@ -19,7 +19,9 @@ class ElectionService(private val client: ElectionClient, private val repository
 
         logger.info { "Election data generated successfully. Sending data to Mongo..." }
 
-        return repository.save(election)
+        witai.saveCandidates(election)
+        return election
+//        return repository.save(election)
     }
 
 }

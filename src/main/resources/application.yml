@@ -8,6 +8,11 @@ camara:
 cepesp:
   api: http://cepesp.io/api/consulta
 
+witai:
+  api: https://api.wit.ai
+  token: ${WIT_AI_TOKEN}
+  version: 20170307
+
 logging:
   level:
     br.com.ratchet: DEBUG
