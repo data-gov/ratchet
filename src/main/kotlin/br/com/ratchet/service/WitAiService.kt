@@ -27,7 +27,7 @@ class WitAiService(private val client: WitAiClient) {
             }
         }
     }
-    
+
     private fun saveWholeEntity(candidates: List<Candidate>, role: String) {
         val candidatesEntity = candidates.map { candidate -> toEntityValue(candidate.name) }
         val entityId = roleEntityMap[role].orEmpty()
