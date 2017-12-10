@@ -2,7 +2,7 @@ package br.com.ratchet.service
 
 import br.com.ratchet.client.ElectionClient
 import br.com.ratchet.client.model.ElectionData
-import br.com.ratchet.controller.model.ElectionPost
+import br.com.ratchet.controller.model.ElectionPost.PRESIDENT
 import br.com.ratchet.controller.model.ElectionRequest
 import br.com.ratchet.repository.ElectionRepository
 import br.com.ratchet.repository.model.Candidate
@@ -23,28 +23,30 @@ import java.util.Collections.singletonList
 @RunWith(SpringRunner::class)
 internal class ElectionServiceTest {
 
-    @MockBean private lateinit var client: ElectionClient
+    @MockBean private lateinit var electionClient: ElectionClient
+    @MockBean private lateinit var witService: WitAiService
     @MockBean private lateinit var repository: ElectionRepository
 
     private lateinit var service: ElectionService
 
     @Before
     fun setUp() {
-        service = ElectionService(client, repository)
+        service = ElectionService(electionClient, repository, witService)
     }
 
     @Test
     fun shouldExtractElectionInfo() {
-        val electionRequest = ElectionRequest(2014, ElectionPost.PRESIDENT)
+        val electionRequest = ElectionRequest(2014, PRESIDENT)
         val expectedElectionInfo = expectedData()
 
-        whenever(client.electionData(any(), any(), any(), any())).thenReturn(electionData())
+        whenever(electionClient.electionData(any(), any(), any(), any())).thenReturn(electionData())
         whenever(repository.save(expectedElectionInfo)).thenReturn(expectedElectionInfo)
 
         val actualElectionInfo = service.extractElectionInfo(electionRequest)
 
-        verify(client).electionData(2014, 1)
+        verify(electionClient).electionData(2014, 1)
         verify(repository).save(expectedData())
+        verify(witService).saveCandidates(expectedData())
 
         assertThat(actualElectionInfo).isEqualToComparingFieldByField(expectedElectionInfo)
     }

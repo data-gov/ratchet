@@ -4,6 +4,10 @@ camara:
 cepesp:
   api: http://localhost:9000
 
+witai:
+  api: http://localhost:9000
+  token: TOKEN
+
 spring:
   data:
     mongodb:

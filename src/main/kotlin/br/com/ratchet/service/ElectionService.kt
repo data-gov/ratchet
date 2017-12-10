@@ -17,11 +17,11 @@ class ElectionService(private val client: ElectionClient, private val repository
         val electionData = client.electionData(request.year, request.post.code)
         val election = toElection(request, electionData)
 
-        logger.info { "Election data generated successfully. Sending data to Mongo..." }
-
+        logger.info { "Election data generated successfully. Sending data to Wit.Ai..." }
         witai.saveCandidates(election)
-        return election
-//        return repository.save(election)
+
+        logger.info { "WitAi data has sent successfully. Sending data to mongo..." }
+        return repository.save(election)
     }
 
 }

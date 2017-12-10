@@ -20,18 +20,37 @@ class WitAiService(private val client: WitAiClient) {
     fun saveCandidates(election: Election) {
         election.post.forEach { post ->
             if (post.postDescription == "PRESIDENTE") {
-                saveWitEntity(post.candidates, post.postDescription)
+                saveOneByOne(post.candidates, post.postDescription)
             }
         }
     }
 
-    private fun saveWitEntity(candidates: List<Candidate>, role: String) {
+    private fun saveOneByOne(candidates: List<Candidate>, role: String) {
+        val candidatesEntity = candidates.map { candidate -> toEntityValue(candidate.name) }
+        val entityId = roleEntityMap[role]
+
+        candidatesEntity.forEach { entity ->
+            try {
+                client.addNewEntityValue(entityId, entity, token)
+                logger.info { "Entity $entityId has saved ${entity.name}." }
+            } catch (exception: RuntimeException) {
+                if (exception.message == "WIT AI Conflict") {
+                    logger.error { "CONFLICT ${entityId} has  ${entity.name}." }
+                }
+            }
+        }
+    }
+
+    //    TODO: This one is better, but overrides existing entity though
+    //    we should first retrieve existing entities, append new ones then save again
+    //    nedd to create a new FeignConfiguration
+    private fun saveWholeEntity(candidates: List<Candidate>, role: String) {
         val candidatesEntity = candidates.map { candidate -> toEntityValue(candidate.name) }
         val entityId = roleEntityMap[role]
         val request = WitAiEntityRequest(entityId, candidatesEntity)
 
         try {
-            client.updatePresidents(request, entityId, token)
+            client.saveEntity(request, entityId, token)
             logger.info { "Wit Ai ${request.id} updated!" }
         } catch (exception: RuntimeException) {
             if (exception.message == "WIT AI Conflict") {

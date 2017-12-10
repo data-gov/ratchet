@@ -3,3 +3,13 @@ spring:
     mongodb:
       uri: mongodb://${RATCHET_MONGO_USER}:${RATCHET_MONGO_PASSWORD}@nominus-prime-shard-00-00-hqvh9.mongodb.net:27017,nominus-prime-shard-00-01-hqvh9.mongodb.net:27017,nominus-prime-shard-00-02-hqvh9.mongodb.net:27017/test?ssl=true&replicaSet=nominus-prime-shard-0&authSource=admin
 
+camara:
+  api: https://dadosabertos.camara.leg.br/api/v2/
+
+cepesp:
+  api: http://cepesp.io/api/consulta
+
+witai:
+  api: https://api.wit.ai
+  token: ${WIT_AI_TOKEN}
+  version: 20170307
