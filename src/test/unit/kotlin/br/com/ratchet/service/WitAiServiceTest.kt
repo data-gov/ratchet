@@ -43,7 +43,7 @@ internal class WitAiServiceTest {
     fun shouldSavePresidencyCandidatesOneByOne() {
         service.saveCandidates(election)
 
-        election.post.forEach { post ->
+        election.post.forEach { _ ->
             verify(client).addNewEntityValue(eq("president"), any(), any())
         }
     }
