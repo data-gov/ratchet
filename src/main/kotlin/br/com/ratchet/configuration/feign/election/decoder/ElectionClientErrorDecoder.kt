@@ -1,4 +1,4 @@
-package br.com.ratchet.configuration.feign.decoder
+package br.com.ratchet.configuration.feign.election.decoder
 
 import br.com.ratchet.client.model.WitAiException
 import feign.Response
