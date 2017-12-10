@@ -16,8 +16,12 @@ import org.springframework.web.bind.annotation.RequestHeader
 interface WitAiClient {
 
     @PutMapping(path = arrayOf("/entities/{entityId}?v=20170307"))
-    fun saveEntity(@RequestBody request: WitAiEntityRequest, @PathVariable("entityId") entityId: String?, @RequestHeader("Authorization") token: String)
+    fun saveEntity(@RequestBody request: WitAiEntityRequest,
+                   @PathVariable("entityId") entityId: String?,
+                   @RequestHeader("Authorization") token: String)
 
     @PostMapping(path = arrayOf("/entities/{entityId}/values?v=20170307"))
-    fun addNewEntityValue(@PathVariable("entityId") entityId: String?, @RequestBody request: EntityValues, @RequestHeader("Authorization") token: String)
+    fun addNewEntityValue(@PathVariable("entityId") entityId: String?,
+                          @RequestBody request: EntityValues,
+                          @RequestHeader("Authorization") token: String)
 }

@@ -9,7 +9,9 @@ import mu.KotlinLogging
 import org.springframework.stereotype.Service
 
 @Service
-class ElectionService(private val client: ElectionClient, private val repository: ElectionRepository, private val witai: WitAiService) {
+class ElectionService(private val client: ElectionClient,
+                      private val repository: ElectionRepository,
+                      private val witai: WitAiService) {
 
     private val logger = KotlinLogging.logger {}
 

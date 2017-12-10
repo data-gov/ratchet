@@ -3,10 +3,12 @@ package br.com.ratchet.service
 import br.com.ratchet.client.WitAiClient
 import br.com.ratchet.client.model.EntityValues
 import br.com.ratchet.client.model.WitAiEntityRequest
+import br.com.ratchet.client.model.WitAiException
 import br.com.ratchet.repository.model.Candidate
 import br.com.ratchet.repository.model.Election
 import mu.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 
 @Service
@@ -33,8 +35,8 @@ class WitAiService(private val client: WitAiClient) {
             try {
                 client.addNewEntityValue(entityId, entity, token)
                 logger.info { "Entity $entityId has saved ${entity.name}." }
-            } catch (exception: RuntimeException) {
-                if (exception.message == "WIT AI Conflict") {
+            } catch (exception: WitAiException) {
+                if (exception.status == HttpStatus.CONFLICT) {
                     logger.error { "CONFLICT ${entityId} has  ${entity.name}." }
                 }
             }
@@ -52,8 +54,8 @@ class WitAiService(private val client: WitAiClient) {
         try {
             client.saveEntity(request, entityId, token)
             logger.info { "Wit Ai ${request.id} updated!" }
-        } catch (exception: RuntimeException) {
-            if (exception.message == "WIT AI Conflict") {
+        } catch (exception: WitAiException) {
+            if (exception.status == HttpStatus.CONFLICT) {
                 logger.error { "there's a ${request.id} saved, skipping this one" }
             }
         }
