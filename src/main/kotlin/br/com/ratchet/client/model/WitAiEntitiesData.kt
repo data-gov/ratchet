@@ -3,7 +3,7 @@ package br.com.ratchet.client.model
 import com.fasterxml.jackson.annotation.JsonProperty
 
 data class WitAiEntityRequest(
-    @JsonProperty("id") val id: String,
+    @JsonProperty("id") val id: String?,
     @JsonProperty("values") val values: List<EntityValues>
 )
 
