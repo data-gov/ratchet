@@ -13,3 +13,5 @@ build/
 
 # Mac Stuff
 .DS_Store
+
+.env

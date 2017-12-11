@@ -1,7 +1,5 @@
 package br.com.ratchet.configuration.feign
 
-import br.com.ratchet.configuration.feign.decoder.ElectionClientDecoder
-import br.com.ratchet.configuration.feign.decoder.ElectionClientErrorDecoder
 import feign.Logger
 import feign.Request
 import okhttp3.ConnectionPool
@@ -34,12 +32,6 @@ class FeignConfiguration {
 
     @Bean
     fun options() = Request.Options(connectTimeout.toInt(), readTimeout.toInt())
-
-    @Bean
-    fun electionDecoder() = ElectionClientDecoder()
-
-    @Bean
-    fun errorDecoder() = ElectionClientErrorDecoder()
 
     @Bean
     fun okHttpClient() = feign.okhttp.OkHttpClient(configOkHttp())

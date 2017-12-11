@@ -2,12 +2,6 @@ spring:
   application:
     name: ratchet
 
-camara:
-  api: https://dadosabertos.camara.leg.br/api/v2/
-
-cepesp:
-  api: http://cepesp.io/api/consulta
-
 logging:
   level:
     br.com.ratchet: DEBUG

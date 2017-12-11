@@ -9,7 +9,9 @@ import mu.KotlinLogging
 import org.springframework.stereotype.Service
 
 @Service
-class ElectionService(private val client: ElectionClient, private val repository: ElectionRepository) {
+class ElectionService(private val client: ElectionClient,
+                      private val repository: ElectionRepository,
+                      private val witai: WitAiService) {
 
     private val logger = KotlinLogging.logger {}
 
@@ -17,9 +19,14 @@ class ElectionService(private val client: ElectionClient, private val repository
         val electionData = client.electionData(request.year, request.post.code)
         val election = toElection(request, electionData)
 
-        logger.info { "Election data generated successfully. Sending data to Mongo..." }
+        logger.info { "Election data generated successfully. Sending data to Wit.Ai..." }
+        witai.saveCandidates(election)
 
-        return repository.save(election)
+        logger.info { "WitAi data has sent successfully. Sending data to mongo..." }
+        val savedData = repository.save(election)
+
+        logger.info { "Mongo data data has sent successfully! Extraction complete !" }
+        return savedData
     }
 
 }

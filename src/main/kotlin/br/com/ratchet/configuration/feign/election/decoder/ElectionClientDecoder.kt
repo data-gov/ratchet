@@ -1,4 +1,4 @@
-package br.com.ratchet.configuration.feign.decoder
+package br.com.ratchet.configuration.feign.election.decoder
 
 import br.com.ratchet.client.model.ElectionData
 import com.fasterxml.jackson.databind.DeserializationFeature
@@ -14,14 +14,14 @@ import java.lang.reflect.Type
 class ElectionClientDecoder : Decoder {
 
     private val mapper = CsvMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+    private val electionDataReader = mapper.readerFor(ElectionData::class.java)
+    private val csvSchema = CsvSchema.emptySchema().withHeader()
 
     override fun decode(response: Response, type: Type): ImmutableList<ElectionData> {
         val responseString = Util.toString(response.body()?.asReader())
         val responseObject = when (responseString) {
             null -> emptyList()
-            else -> mapper.readerFor(ElectionData::class.java)
-                .with(CsvSchema.emptySchema().withHeader())
-                .readValues<ElectionData>(responseString).readAll()
+            else -> electionDataReader.with(csvSchema).readValues<ElectionData>(responseString).readAll()
         }
 
         return copyOf(responseObject)
