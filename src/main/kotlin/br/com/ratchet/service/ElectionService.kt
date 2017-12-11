@@ -23,7 +23,10 @@ class ElectionService(private val client: ElectionClient,
         witai.saveCandidates(election)
 
         logger.info { "WitAi data has sent successfully. Sending data to mongo..." }
-        return repository.save(election)
+        val savedData = repository.save(election)
+
+        logger.info { "Mongo data data has sent successfully! Extraction complete !" }
+        return savedData
     }
 
 }

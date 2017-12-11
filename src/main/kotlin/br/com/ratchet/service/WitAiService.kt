@@ -29,9 +29,10 @@ class WitAiService(private val client: WitAiClient) {
     }
 
     private fun saveWholeEntity(candidates: List<Candidate>, role: String) {
-        val candidatesEntity = candidates.map { candidate -> toEntityValue(candidate.name) }
+        val newCandidatesEntity = candidates.map { candidate -> toEntityValue(candidate.name) }
         val entityId = roleEntityMap[role].orEmpty()
-        val request = WitAiEntityRequest(entityId, candidatesEntity)
+        val actualCandidatesEntity = client.getEntities(entityId, token).values
+        val request = WitAiEntityRequest(entityId, actualCandidatesEntity.plus(newCandidatesEntity))
 
         try {
             client.saveEntity(request, entityId, token)

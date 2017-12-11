@@ -51,7 +51,7 @@ class WitAiClientIntegrationTest {
     @Test
     fun shouldAddNewEntityValueToWitAi() {
         val requestEntity = EntityValues("Ilmo vini", listOf("Sinonimos"), "meta")
-        client.addNewEntityValue(ENTITY_ID, requestEntity,TOKEN)
+        client.addNewEntityValue(ENTITY_ID, requestEntity, TOKEN)
 
         verify(
             postRequestedFor(urlEqualTo("/entities/$ENTITY_ID/values?v=20170307"))

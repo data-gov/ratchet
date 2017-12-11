@@ -33,7 +33,6 @@ class FeignConfiguration {
     @Bean
     fun options() = Request.Options(connectTimeout.toInt(), readTimeout.toInt())
 
-
     @Bean
     fun okHttpClient() = feign.okhttp.OkHttpClient(configOkHttp())
 
